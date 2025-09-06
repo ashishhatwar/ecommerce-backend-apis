@@ -1,0 +1,116 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "E-commerce APIs",
+    "version": "1.0.0",
+    "description": "APIs for E-commerce application"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "JWT": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "paths": {
+    "/api/products": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "Get Products",
+        "description": "User will get all products",
+        "security": [
+          {
+            "JWT": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+
+    "/api/products/": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "Get Product",
+        "description": "User will get single product",
+        "security": [
+          {
+            "JWT": {}
+          }
+        ],
+        "parameters": [
+
+            {
+
+                "name": "id",
+                "in": "path",
+                "description": "The id of the product to retrieve",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+
+
+            }
+
+
+        ],
+        "responses": {
+          "200": {
+            "description": "Product found"
+          },
+          "404": {
+            "description": "Product not found"
+          }
+        }
+      }
+    },
+
+    "/api/users/signin": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Login",
+        "description": "User login to get token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Incorrect Credentials"
+          }
+        }
+      }
+    }
+  }
+}

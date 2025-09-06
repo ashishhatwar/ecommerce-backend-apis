@@ -1,0 +1,64 @@
+ProductController
+Get Products - Done.
+Add a product - Done.
+Get one product - Done.
+Rate product -done
+Filter Product - Done
+Add items to cart - done
+Get items of cart - done
+Remove items from cart. - done
+
+
+user Controller 
+-singUp - Email, Name, Password, TypeOfUser(customer, seller) - Done
+-signin - (Email, Password) - Done
+
+{
+    _id: Cat1,
+    averagePrice: 50000
+}
+
+
+2. Find the average rating of a product 
+
+db.products.aggregate([
+
+//1. Create documents for ratings
+
+{
+    $unwind: "$ratings"
+
+},
+
+{$group:{
+
+    _id: "$name",
+    averageRating:{$avg:"$ratings.rating"}
+
+}}
+
+])
+
+
+db.products.aggregate([
+
+    // 1. Project name of product and countOfRating
+{
+    $project:{name:1, countOfRating:{
+
+        $cond:{if:{$isArray:"$ratings"}, then:{$size: "$ratings"}, else: 0}}
+        }
+},{
+
+    //Stage2: sort the collection
+
+    $sort:{countOfRating:-1}
+
+},
+
+{
+
+    //Stage3. Limit to just 1 item result
+    $limit: 1
+}
+])
