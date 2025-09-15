@@ -28,14 +28,14 @@ return res.status(400).send("Something went wrong");
 
  async addProduct(req, res) {
     try {
-      const { name, desc, price, category, sizes } = req.body;
+      const { name, desc, price, categories, sizes } = req.body;
       const newProduct = new ProductModel(
         name,
         desc,
         parseFloat(price),
-        req.file.filename,
-        category,
-        sizes.split(","),
+        req?.file?.filename,
+        categories,
+        sizes?.split(","),
       );
 
       const createdRecord = await this.productRepository.add(newProduct);
