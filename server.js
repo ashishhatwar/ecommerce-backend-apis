@@ -12,6 +12,7 @@ import jwtAuth from "./src/middlewares/jwt.middleware.js";
 import loggerMiddleware from "./src/middlewares/logger.middlewareUsingWinston.js";
 import CartItemsRouter from "./src/features/cart/cartItems.routes.js";
 import orderRouter from "./src/features/order/order.routes.js";
+import mongoose from "mongoose";
 
 // import apiDocs from "./swagger.json" assert {type:'json'};
 // import apiDocs from "./swagger.json";
@@ -20,6 +21,8 @@ import fs from "fs";
 import { ApplicationError } from "./src/error-handler/applicationError.js";
 import {connectToMongoDB} from "./src/config/mongodb.js";
 import {connectUsingMongoose} from "./src/config/mongooseConfig.js";
+
+import likeRouter from "./src/features/like/like.routes.js";
 
 
 
@@ -59,10 +62,13 @@ server.use("/api/users", userRouter);
 
 server.use("/api/cartItems", jwtAuth, CartItemsRouter);
 
+server.use("/api/likes", jwtAuth, likeRouter);
+
 // Default request handler
 server.get("/", (req, res) => {
   res.send("Welcome to E-commerce APIs");
 });
+
 
 // Error handler
 

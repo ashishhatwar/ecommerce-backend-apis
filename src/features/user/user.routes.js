@@ -11,7 +11,7 @@ const userRouter = express.Router(); // the goal of this router is to specify yo
 const userController = new UserController();
 
 userRouter.post("/signup", (req, res, next) => {
-  userController.signUp(req, res);
+  userController.signUp(req, res, next);
 });
 
 userRouter.post("/signin", (req, res) => {

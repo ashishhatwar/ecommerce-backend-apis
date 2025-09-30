@@ -15,6 +15,9 @@ export const userSchema = new mongoose.Schema({
                 validator: function(value) {
 // This function validates a password and checks if it is 8–12 characters long, 
 // contains at least one special symbol (@$!%*?&), and only uses allowed characters
+
+              // If password is already hashed, skip validation
+      if (value.startsWith("$2b$")) return true;
                    
                     return /^(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/.test(value);
 
@@ -26,3 +29,5 @@ export const userSchema = new mongoose.Schema({
     typeOfUser:{type:String, enum:["Customer","Seller","Admin"]}
 
 }, { versionKey: false } );
+
+export const User = mongoose.model("User", userSchema);

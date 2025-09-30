@@ -15,6 +15,15 @@ export default class UserController {
 
     console.log(req.body);
 
+    //  validate raw password here (before hashing)
+       const passwordRegex = /^(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+        error:
+          "Password must be 8–12 characters long and contain at least one special symbol (@$!%*?&)",
+      });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 12);
 
     try {
